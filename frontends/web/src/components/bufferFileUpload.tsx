@@ -1,7 +1,18 @@
 import { CssGrid, Orientation, GapSize, Position } from "./cssGrid";
 import { FileUploadButton, FileUploadButtonProps } from "./fileUploadButton";
+import { BlobLoader } from "./getBlobButton";
 
-import { useIsMobile } from "../hooks/useResponsiveBreakpoint";
+import * as useResponsiveBreakpoint from "../hooks/useResponsiveBreakpoint";
+
+// Ensure BlobLoader is exported
+
+const processBlob = async (blob: Blob): Promise<FileBufferObject | null> => {
+    const buffer = await blob.arrayBuffer();
+    return {
+        filename: "loaded_from_blob",
+        data: new Uint8Array(buffer),
+    };
+};
 
 const processFile = (
     uploadedFile: File | null,
@@ -29,46 +40,61 @@ export const BufferFileUpload = ({
     label,
     ...remainingProps
 }: BufferFileUploadProps): JSX.Element => {
-    const isMobile = useIsMobile();
+    const isMobile = useResponsiveBreakpoint.useIsMobile();
+
+    const handleBlobLoad = async (blob: Blob) => {
+        const bufferObject = await processBlob(blob);
+        if (bufferObject) {
+            onFileSelect(bufferObject);
+        }
+    };
+
     return (
         <CssGrid
-            orientation={
-                isMobile ? Orientation.vertical : Orientation.horizontal
-            }
+            orientation={Orientation.vertical}
             gap={GapSize.medium}
             alignItems={Position.center}
             justifyContent={isMobile ? Position.stretch : Position.start}
         >
-            <FileUploadButton
-                variant="contained"
-                {...remainingProps}
-                onFileSelect={async (fileList: FileList | null) => {
-                    if (!fileList) return;
-
-                    const file = fileList[0];
-
-                    try {
-                        const bufferObject = await processFile(file);
-                        if (bufferObject) {
-                            onFileSelect(bufferObject);
-                        }
-                    } catch (err) {
-                        console.error(
-                            "An error occurred while processing the file",
-                            err,
-                        );
-                    }
-                }}
+            <CssGrid
+                orientation={
+                    isMobile ? Orientation.vertical : Orientation.horizontal
+                }
+                gap={GapSize.medium}
+                alignItems={Position.center}
+                justifyContent={isMobile ? Position.stretch : Position.start}
             >
-                <CssGrid
-                    orientation={Orientation.horizontal}
-                    gap={GapSize.medium}
-                    alignItems={Position.center}
+                <FileUploadButton
+                    variant="contained"
+                    {...remainingProps}
+                    onFileSelect={async (fileList: FileList | null) => {
+                        if (!fileList) return;
+                        const file = fileList[0];
+                        try {
+                            const bufferObject = await processFile(file);
+                            if (bufferObject) {
+                                onFileSelect(bufferObject);
+                            }
+                        } catch (err) {
+                            console.error(
+                                "An error occurred while processing the file",
+                                err,
+                            );
+                        }
+                    }}
                 >
-                    {label || "Choose File"}
-                </CssGrid>
-            </FileUploadButton>
-            <div>{getFieldFileUploadLabel(uploadedFile)}</div>
+                    <CssGrid
+                        orientation={Orientation.horizontal}
+                        gap={GapSize.medium}
+                        alignItems={Position.center}
+                    >
+                        {label || "Choose File"}
+                    </CssGrid>
+                </FileUploadButton>
+                <div>{getFieldFileUploadLabel(uploadedFile)}</div>
+            </CssGrid>
+            <div>OR</div>
+            <BlobLoader onLoadBlob={handleBlobLoad} />
         </CssGrid>
     );
 };

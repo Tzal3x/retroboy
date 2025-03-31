@@ -1,0 +1,24 @@
+{
+  "routes": {
+      "/retroboy/static/js/main.14202cea.js": "/static/js/main.14202cea.js",
+      "/retroboy/asset-manifest.json": "/asset-manifest.json",
+      "/retroboy/static/js/main.14202cea.js.LICENSE.txt": "/static/js/main.14202cea.js.LICENSE.txt",
+      "/retroboy/static/js/453.7e84896c.chunk.js.map": "/static/js/453.7e84896c.chunk.js.map",
+      "/retroboy/ByteBounce.ttf": "/ByteBounce.ttf",
+      "/retroboy/manifest.json": "/manifest.json",
+      "/retroboy/robots.txt": "/robots.txt",
+      "/retroboy/static/js/main.14202cea.js.map": "/static/js/main.14202cea.js.map",
+      "/retroboy/static/js/453.7e84896c.chunk.js": "/static/js/453.7e84896c.chunk.js",
+      "/retroboy/static/media/retroboyCore_bg.e6284aefb643989b7be6.wasm": "/static/media/retroboyCore_bg.e6284aefb643989b7be6.wasm",
+      "/retroboy/logo.png": "/logo.png",
+      "/retroboy/index.html": "/index.html",
+      "/retroboy/favicon.ico": "/favicon.ico"
+  },
+  "metadata": {
+      "link": "http://retroboy.wal.app/",
+      "image_url": "http://retroboy.wal.app/logo.png",
+      "description": "A Game Boy emulator written in Rust.",
+      "project_url": "https://github.com/smparsons/retroboy",
+      "creator": "Created by Samuel Parsons"
+  }
+}
