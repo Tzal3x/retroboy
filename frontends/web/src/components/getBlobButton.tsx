@@ -19,7 +19,7 @@ export const BlobLoader = ({ onLoadBlob }: BlobLoaderProps) => {
     const [blobId, setBlobId] = useState("");
 
     const handleLoadBlob = async () => {
-        const url = `https://your-server.com/blobs/${blobId}`;
+        const url = `https://aggregator.walrus-mainnet.walrus.space/v1/blobs/${encodeURIComponent(blobId)}`;
         try {
             const response = await fetch(url);
             const blob = await response.blob();
