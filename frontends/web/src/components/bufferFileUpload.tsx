@@ -9,7 +9,7 @@ import * as useResponsiveBreakpoint from "../hooks/useResponsiveBreakpoint";
 const processBlob = async (blob: Blob): Promise<FileBufferObject | null> => {
     const buffer = await blob.arrayBuffer();
     return {
-        filename: "loaded_from_blob",
+        filename: "Loaded from Walrus! (:=)",
         data: new Uint8Array(buffer),
     };
 };
